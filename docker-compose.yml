@@ -10,6 +10,17 @@ services:
     ports:
       - "8800:80"
 
+  ai2-lab-composer-php:
+    container_name: ai2-lab-composer-php
+    hostname: ai2-lab-composer-php
+    build: ./docker/ai2-lab-composer/php
+    mem_limit: 512m
+    volumes:
+      - ./:/docker
+      - ./source/lab-composer:/var/www/html
+    ports:
+      - "8801:80"
+
   ai2-node:
     container_name: ai2-node
     hostname: ai2-node
