@@ -1,0 +1,12 @@
+{
+  "name": "yarntest",
+  "version": "1.0.0",
+  "description": "Yarn Test",
+  "main": "index.js",
+  "author": "Artur Karczmarczyk",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "luxon": "2.0.0"
+  }
+}

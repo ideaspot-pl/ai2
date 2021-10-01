@@ -1,0 +1,3 @@
+FROM php:7.2-cli
+COPY ./example.php /tmp/copied.php
+CMD php /tmp/copied.php
