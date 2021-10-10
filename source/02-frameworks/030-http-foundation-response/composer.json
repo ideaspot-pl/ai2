@@ -1,0 +1,20 @@
+{
+    "name": "akarczmarczyk/symfony-demo",
+    "description": "Symfony demo projects",
+    "type": "project",
+    "require": {
+        "symfony/http-foundation": "^5.3"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Akarczmarczyk\\SymfonyDemo\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Artur Karczmarczyk",
+            "email": "artur@ideaspot.pl"
+        }
+    ]
+}

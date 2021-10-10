@@ -1,12 +1,13 @@
 version: '3.9'
 services:
-  ai2-symfony:
+  ai2-symfony-php:
     container_name: ai2-symfony-php
     hostname: ai2-symfony-php
     build: ./docker/ai2-symfony/php
     mem_limit: 512m
     volumes:
       - ./:/docker
+      - ./source:/var/www/html
     ports:
       - "8800:80"
 
