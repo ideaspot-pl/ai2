@@ -1,0 +1,12 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+# CHALLENGE:
+#app_routing_optional:
+#...
+
+app_included_example:
+  resource: 'routes/app_included_example.yaml'
+  prefix: /included
+  name_prefix: 'app_included_example_'

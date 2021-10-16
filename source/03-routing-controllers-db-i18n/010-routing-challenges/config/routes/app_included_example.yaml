@@ -1,0 +1,4 @@
+# config/routes/app_included_example.yaml
+foo:
+  path: /foo
+  controller: App\Controller\RoutingController::fooAction
