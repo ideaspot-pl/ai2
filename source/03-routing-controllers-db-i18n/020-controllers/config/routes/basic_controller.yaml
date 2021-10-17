@@ -1,0 +1,5 @@
+# config/routes/basic_controller.yaml
+random:
+  path: /random/{max}
+  controller: App\Controller\BasicController::randomAction
+

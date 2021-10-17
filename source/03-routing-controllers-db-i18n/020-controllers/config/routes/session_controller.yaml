@@ -1,0 +1,9 @@
+# config/routes/session_controller.yaml
+session:
+  path: /session
+  controller: App\Controller\SessionController::sessionAction
+
+request_stack:
+  path: /request-stack
+  controller: App\Controller\SessionController::requestStackAction
+

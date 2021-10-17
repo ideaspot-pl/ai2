@@ -1,3 +1,17 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+basic_controller:
+  resource: 'routes/basic_controller.yaml'
+  name_prefix: 'basic_controller_'
+  prefix: /basic
+
+service_controller:
+  resource: 'routes/service_controller.yaml'
+  name_prefix: 'service_controller_'
+  prefix: /service
+
+session_controller:
+  resource: 'routes/session_controller.yaml'
+  name_prefix: 'session_controller_'
+  prefix: /session

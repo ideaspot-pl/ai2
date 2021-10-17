@@ -1,0 +1,5 @@
+# config/routes/service_controller.yaml
+random:
+  path: /random/{max}
+  controller: App\Controller\ServiceController::randomAction
+
