@@ -10,6 +10,25 @@ services:
       - ./source:/var/www/html
     ports:
       - "8800:80"
+    links:
+      - ai2-symfony-mysql
+
+  ai2-symfony-mysql:
+    container_name: ai2-symfony-mysql
+    hostname: ai2-symfony-mysql
+    image: mariadb:10.3.9
+    mem_limit: 128m
+    environment:
+      MYSQL_DATABASE: doctrine
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_USER: doctrine
+      MYSQL_PASSWORD: 12345678
+    volumes:
+      - ./data/doctrine:/var/lib/mysql
+      - ./:/docker
+      - ~/.ssh:/root/.ssh:ro
+    ports:
+      - "38800:3306"
 
   ai2-lab-composer-php:
     container_name: ai2-lab-composer-php

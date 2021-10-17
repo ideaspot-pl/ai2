@@ -5,7 +5,9 @@ RUN apt-get update \
         libzip-dev \
         zip \
         sqlite3 \
-  && docker-php-ext-install zip
+  && docker-php-ext-install zip \
+  && docker-php-ext-configure pdo_mysql \
+  && docker-php-ext-install pdo_mysql
 
 RUN apt-get update \
     && apt-get install wget \
