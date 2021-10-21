@@ -1,0 +1,3 @@
+form_builder:
+    path: /form-builder
+    controller: App\Controller\FormBuilderController::newLocationAction
