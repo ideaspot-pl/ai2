@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Location;
+use App\Form\NewLocationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -28,8 +29,25 @@ class FormBuilderController extends AbstractController
             ->getForm();
         ;
 
-        return $this->render('form_builder/new_location.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'form_builder/new_location.html.twig',
+//            'form_builder/new_location_bootstrap4.html.twig',
+            ['form' => $form->createView(),]
+        );
+    }
+
+    public function newLocationSeparateTypeAction(Request $request): Response
+    {
+        $location = new Location();
+        $location->setName("Szczecin");
+        $location->setLatitude(53.4481);
+        $location->setLongitude(14.5372);
+
+        $form = $this->createForm(NewLocationType::class, $location);
+
+        return $this->render(
+            'form_builder/new_location.html.twig',
+            ['form' => $form->createView(),]
+        );
     }
 }

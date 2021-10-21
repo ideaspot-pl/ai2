@@ -1,3 +1,15 @@
 form_builder:
     path: /form-builder
     controller: App\Controller\FormBuilderController::newLocationAction
+
+form_builder_separate_type:
+    path: /form-builder-type
+    controller: App\Controller\FormBuilderController::newLocationSeparateTypeAction
+
+form_processing_new:
+    path: /form-processing/new
+    controller: App\Controller\FormProcessingController::newAction
+
+form_processing_index:
+    path: /form-processing
+    controller: App\Controller\FormProcessingController::indexAction
