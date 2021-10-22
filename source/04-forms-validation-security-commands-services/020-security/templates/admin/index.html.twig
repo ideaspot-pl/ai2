@@ -9,12 +9,17 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Hello!</h1>
 
     This friendly message is coming from:
     <ul>
         <li>Your controller at <code><a href="{{ '/docker/source/04-forms-validation-security-commands-services/020-security/src/Controller/AdminController.php'|file_link(0) }}">src/Controller/AdminController.php</a></code></li>
         <li>Your template at <code><a href="{{ '/docker/source/04-forms-validation-security-commands-services/020-security/templates/admin/index.html.twig'|file_link(0) }}">templates/admin/index.html.twig</a></code></li>
     </ul>
+
+    <p>User: {{ user.email }}</p>
+    <p>User: {{ app.user.email }}</p>
+
+    <p><a href="{{ path('app_logout') }}">Logout</a></p>
 </div>
 {% endblock %}
