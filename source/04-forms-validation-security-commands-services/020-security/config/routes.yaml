@@ -6,3 +6,6 @@ app_logout:
 admin_index:
   path: /admin
   controller: App\Controller\AdminController:index
+
+challenge_solution:
+  resource: 'routes/challenge_solution.yaml'
