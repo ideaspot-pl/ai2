@@ -7,7 +7,9 @@ RUN apt-get update \
         sqlite3 \
   && docker-php-ext-install zip \
   && docker-php-ext-configure pdo_mysql \
-  && docker-php-ext-install pdo_mysql
+  && docker-php-ext-install pdo_mysql \
+  && pecl install xdebug-3.1.1 \
+  && docker-php-ext-enable xdebug
 
 RUN apt-get update \
     && apt-get install wget \
@@ -19,3 +21,4 @@ RUN a2enmod rewrite
 
 COPY ./apache2.conf /etc/apache2/
 COPY ./000-default.conf /etc/apache2/sites-enabled/
+COPY ./docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/

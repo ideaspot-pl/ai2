@@ -2,7 +2,9 @@
 {% extends 'base.html.twig' %}
 
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
+{#{% form_theme form 'bootstrap_4_horizontal_layout.html.twig' %}#}
 {# or edit config/packages/twig.yaml for all forms #}
+{# https://symfony.com/doc/current/form/form_themes.html #}
 
 {% block body %}
     {{ form(form) }}

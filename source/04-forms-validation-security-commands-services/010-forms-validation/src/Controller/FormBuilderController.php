@@ -30,8 +30,8 @@ class FormBuilderController extends AbstractController
         ;
 
         return $this->render(
-            'form_builder/new_location.html.twig',
-//            'form_builder/new_location_bootstrap4.html.twig',
+//            'form_builder/new_location.html.twig',
+            'form_builder/new_location_bootstrap4.html.twig',
             ['form' => $form->createView(),]
         );
     }

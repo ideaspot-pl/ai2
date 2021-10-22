@@ -8,24 +8,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class FormProcessingController extends AbstractController
+class FormValidationController extends AbstractController
 {
     public function newAction(Request $request): Response
     {
         $location = new Location();
-        $form = $this->createForm(NewLocationType::class, $location);
+        $form = $this->createForm(NewLocationType::class, $location, [
+            'validation_groups' => ['create'],
+        ]);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) { // submitted and valid
             $em = $this->getDoctrine()->getManager();
             $em->persist($location);
             $em->flush();
 
-            return $this->redirectToRoute('form_processing_index');
+            $this->addFlash('success', 'Successfully saved!');
+            return $this->redirectToRoute('form_validation_index');
+        } elseif ($form->isSubmitted()) { // not valid
+            $this->addFlash('error', 'Form invalid.');
         }
 
         return $this->render(
-            'form_processing/new.html.twig',
+            'form_builder/new_location.html.twig',
             ['form' => $form->createView(),]
         );
     }
@@ -33,7 +38,7 @@ class FormProcessingController extends AbstractController
     public function indexAction(LocationRepository $repository): Response
     {
         $locations = $repository->findAll();
-        return $this->render('form_processing/index.html.twig', [
+        return $this->render('form_validation/index.html.twig', [
             'locations' => $locations,
         ]);
     }

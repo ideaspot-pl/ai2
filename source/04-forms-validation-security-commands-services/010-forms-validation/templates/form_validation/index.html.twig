@@ -1,0 +1,12 @@
+{# templates/form_validation/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ul>
+        {% for location in locations %}
+            <li>{{ location.id }}: {{ location.name }} ({{ location.latitude }}, {{ location.longitude }})</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ path('form_validation_new') }}">New</a>
+{% endblock %}

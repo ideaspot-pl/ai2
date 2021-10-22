@@ -13,3 +13,11 @@ form_processing_new:
 form_processing_index:
     path: /form-processing
     controller: App\Controller\FormProcessingController::indexAction
+
+form_validation_new:
+    path: /form-validation/new
+    controller: App\Controller\FormValidationController::newAction
+
+form_validation_index:
+    path: /form-validation
+    controller: App\Controller\FormValidationController::indexAction
