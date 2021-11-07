@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Tests\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+class DoctrineWeatherControllerTest extends WebTestCase
+{
+    public function testSomething(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/doctrine/less');
+
+        $cities = $crawler->filter('ol > li');
+        $this->assertCount(3, $cities);
+
+        $this->assertStringStartsWith('Szczecin', $cities->eq(0)->text());
+        $this->assertStringStartsWith('Police', $cities->eq(1)->text());
+        $this->assertStringStartsWith('Berlin', $cities->eq(2)->text());
+    }
+}

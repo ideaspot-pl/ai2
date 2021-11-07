@@ -27,6 +27,9 @@ class HighlanderForecastGenerator
             'wind' => "It's going to be windy!",
         ];
 
+        if (! isset($forecasts[$key])) {
+            throw new \Exception("Invalid key");
+        }
         $forecast = $forecasts[$key];
 
         return $forecast;

@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Tests\Service;
+
+use App\Service\HighlanderForecastGenerator;
+use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+
+class HighlanderForecastGeneratorTest extends KernelTestCase
+{
+    public function dataGetForecastByKey(): array
+    {
+        return [
+            ['rain', "It's going to rain!"],
+            ['snow', "It's going to snow!"],
+            ['sun', "It's going to be a lovely sunny weather!"],
+            ['wind', "It's going to be windy!"],
+        ];
+    }
+
+    /**
+     * @dataProvider dataGetForecastByKey
+     */
+    public function testGetForecastByKey($key, $expectedMessage): void
+    {
+        self::bootKernel();
+        $container = static::getContainer();
+        $generator = $container->get(HighlanderForecastGenerator::class);
+        $message = $generator->getForecastByKey($key);
+
+        $this->assertEquals($expectedMessage, $message, 'Mismatch in expected and actual highlander messages!');
+    }
+
+//    public function testGetForecastByKeyWithoutKey(): void
+//    {
+//        $generator = new HighlanderForecastGenerator();
+//        $this->expectExceptionMessage('Invalid key');
+//        $generator->getForecastByKey('storm');
+//    }
+}
