@@ -1,0 +1,10 @@
+    public function findAllWithMeasurements()
+    {
+        $qb = $this->createQueryBuilder('l');
+        $qb
+            ->join('l.measurements', 'm')
+            ->select(['l', 'm'])
+        ;
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }

@@ -11,7 +11,7 @@ services:
     ports:
       - "8800:80"
     links:
-      - ai2-symfony-mysql
+      - ai2-symfony-mysql-trivia
 
   ai2-symfony-mysql:
     container_name: ai2-symfony-mysql
@@ -29,6 +29,23 @@ services:
       - ~/.ssh:/root/.ssh:ro
     ports:
       - "38800:3306"
+
+  ai2-symfony-mysql-trivia:
+    container_name: ai2-symfony-mysql-trivia
+    hostname: ai2-symfony-mysql-trivia
+    image: mariadb:10.3.9
+    mem_limit: 128m
+    environment:
+      MYSQL_DATABASE: trivia
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_USER: trivia
+      MYSQL_PASSWORD: 12345678
+    volumes:
+      - ./data/trivia:/var/lib/mysql
+      - ./:/docker
+      - ~/.ssh:/root/.ssh:ro
+    ports:
+      - "38801:3306"
 
   ai2-lab-composer-php:
     container_name: ai2-lab-composer-php

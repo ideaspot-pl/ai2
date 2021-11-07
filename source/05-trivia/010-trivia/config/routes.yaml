@@ -1,0 +1,11 @@
+weather_highlander_forecast:
+  path: /highlander-says
+  controller: App\Controller\WeatherController::highlanderForecastAction
+
+doctrine_weather_multiple_queries:
+  path: /doctrine/multiple
+  controller: App\Controller\DoctrineWeatherController::multipleQueriesAction
+
+doctrine_weather_less_queries:
+  path: /doctrine/less
+  controller: App\Controller\DoctrineWeatherController::lessQueriesAction

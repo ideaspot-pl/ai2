@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ol>
+        {% for location in locations %}
+            <li>
+                {{ location.name }}, {{ location.country }}
+
+                <ul>
+                    {% for measurement in location.measurements %}
+                        <li>{{ measurement.date|date('Y-m-d') }}: {{ measurement.celsius }}&deg;C</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ol>
+{% endblock %}
