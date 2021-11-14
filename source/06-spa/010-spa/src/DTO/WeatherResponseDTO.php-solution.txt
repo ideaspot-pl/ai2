@@ -1,0 +1,56 @@
+<?php
+namespace App\DTO;
+
+class WeatherResponseDTO
+{
+    /** @var bool */
+    public $success;
+
+    /** @var string */
+    public $query;
+
+    /** @var LocationDTO */
+    public $location;
+
+    /** @var MeasurementDTO[] */
+    public $measurements;
+
+    public function serialize()
+    {
+        $serialized = [
+            'status' => $this->success,
+            'query' => $this->query,
+        ];
+
+        if ($this->location) {
+            $serialized['location'] = $this->location->serialize();
+        }
+
+        if ($this->measurements) {
+            foreach ($this->measurements as $measurement) {
+                $serialized['measurements'][] = $measurement->serialize();
+            }
+        }
+
+        return $serialized;
+    }
+
+    public static function deserialize($serialized)
+    {
+        $deserialized = new static();
+        $deserialized->success = $serialized['success'] ?? null;
+        $deserialized->query = $serialized['query'] ?? null;
+
+        if (isset($serialized['location']) && $serialized['location']) {
+            $deserialized->location = LocationDTO::deserialize($serialized['location']);
+        }
+
+        if (isset($serialized['measurements']) && $serialized['measurements']) {
+            foreach ($serialized['measurements'] as $measurement) {
+                $deserialized->measurements[] = MeasurementDTO::deserialize($measurement);
+            }
+        }
+
+        return $deserialized;
+    }
+}

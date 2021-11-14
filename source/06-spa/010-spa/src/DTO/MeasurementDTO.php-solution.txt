@@ -1,0 +1,31 @@
+<?php
+namespace App\DTO;
+
+class MeasurementDTO
+{
+    /** @var \DateTime */
+    public $date;
+
+    /** @var int */
+    public $celsius;
+
+    public function serialize()
+    {
+        $serialized = [
+            'date_timestamp' => $this->date->format('U'),
+            'date_string' => $this->date->format('Y-m-d'),
+            'celsius' => $this->celsius,
+        ];
+
+        return $serialized;
+    }
+
+    public static function deserialize($serialized)
+    {
+        $deserialized = new static();
+        $deserialized->date = isset($serialized['date']) ? new \DateTime($serialized['date']) : null;
+        $deserialized->celsius = $serialized['celsius'] ?? null;
+
+        return $deserialized;
+    }
+}

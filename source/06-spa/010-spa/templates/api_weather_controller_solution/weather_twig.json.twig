@@ -1,0 +1,20 @@
+{
+    "query": {
+        "name": {{ locationName }}
+    },
+    "location": {
+        "id": {{ location.id }},
+        "name": {{ location.name }},
+        "latitude": {{ location.latitude }},
+        "longitude": {{ location.longitude }}
+    },
+    "measurements": [
+        {% for measurement in measurements -%}
+            {
+                "date": {{ measurement.date|date('Y-m-d') }},
+                "celsius": {{ measurement.celsius }}
+            }
+            {%- if not loop.last %},{% endif %}
+        {%- endfor %}
+    ]
+}
