@@ -1,0 +1,137 @@
+<?php
+namespace App\Controller;
+
+use App\DTO\LocationDTO;
+use App\DTO\MeasurementDTO;
+use App\DTO\WeatherResponseDTO;
+use App\Entity\Location;
+use App\Repository\LocationRepository;
+use App\Repository\MeasurementRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\YamlEncoder;
+use Symfony\Component\Serializer\SerializerInterface;
+
+class ApiWeatherController extends AbstractController
+{
+    /**
+     * @return Response
+     * @Route("/api/weather.json", name="api_weather_json")
+     */
+    public function weatherJsonAction(Request $request, LocationRepository $locationRepository, MeasurementRepository $measurementRepository): Response
+    {
+        /* todo */
+
+        return $this->json([]);
+    }
+
+    /**
+     * @return Response
+     * @Route("/api/weather-twig.{_format}", name="api_weather_json")
+     */
+    public function weatherTwigAction(Request $request, LocationRepository $locationRepository, MeasurementRepository $measurementRepository, $_format): Response
+    {
+        /* todo */
+
+        $response = new Response();
+        switch ($_format) {
+            case 'json':
+                $response->headers->set('Content-Type', 'application/json');
+                break;
+            case 'csv':
+                $response->headers->set('Content-Type', 'text/csv');
+        }
+
+        return $response;
+    }
+
+    /**
+     * @return Response
+     * @Route("/api/weather-dto", name="api_weather_dto")
+     */
+    public function weatherDtoAction(Request $request, LocationRepository $locationRepository, MeasurementRepository $measurementRepository): Response
+    {
+        $locationName = $request->get('name', null);
+        if (! $locationName) {
+            throw new BadRequestException("Missing location name.");
+        }
+
+        $responseDTO = new WeatherResponseDTO();
+        $responseDTO->success = true;
+        $responseDTO->query = $locationName;
+
+        /** @var Location $location */
+        $location = $locationRepository->findOneByName($locationName);
+        if (! $location) {
+            throw new NotFoundHttpException("Location $locationName not found.");
+        }
+
+        $locationDTO = new LocationDTO();
+        $locationDTO->id = $location->getId();
+        $locationDTO->name = $location->getName();
+        $locationDTO->latitude = $location->getLatitude();
+        $locationDTO->longitude = $location->getLongitude();
+        $responseDTO->location = $locationDTO;
+
+
+        $measurements = $measurementRepository->findByLocation($location);
+        if ($measurements) {
+            foreach ($measurements as $measurement) {
+                $measurementDTO = new MeasurementDTO();
+                $measurementDTO->date = $measurement->getDate();
+                $measurementDTO->celsius = $measurement->getCelsius();
+                $responseDTO->measurements[] = $measurementDTO;
+            }
+        }
+
+        return $this->json($responseDTO->serialize());
+    }
+
+    /**
+     * @return Response
+     * @Route("/api/weather-serializer.{_format}", name="api_weather_dto")
+     */
+    public function weatherSerializerAction(Request $request, LocationRepository $locationRepository, MeasurementRepository $measurementRepository, SerializerInterface $serializer, $_format): Response
+    {
+        $locationName = $request->get('name', null);
+        if (! $locationName) {
+            throw new BadRequestException("Missing location name.");
+        }
+
+        $responseDTO = new WeatherResponseDTO();
+        $responseDTO->success = true;
+        $responseDTO->query = $locationName;
+
+        /** @var Location $location */
+        $location = $locationRepository->findOneByName($locationName);
+        if (! $location) {
+            throw new NotFoundHttpException("Location $locationName not found.");
+        }
+
+        $locationDTO = new LocationDTO();
+        $locationDTO->id = $location->getId();
+        $locationDTO->name = $location->getName();
+        $locationDTO->latitude = $location->getLatitude();
+        $locationDTO->longitude = $location->getLongitude();
+        $responseDTO->location = $locationDTO;
+
+
+        $measurements = $measurementRepository->findByLocation($location);
+        if ($measurements) {
+            foreach ($measurements as $measurement) {
+                $measurementDTO = new MeasurementDTO();
+                $measurementDTO->date = $measurement->getDate();
+                $measurementDTO->celsius = $measurement->getCelsius();
+                $responseDTO->measurements[] = $measurementDTO;
+            }
+        }
+
+        $serialized = $serializer->serialize($responseDTO->serialize(), $_format, [YamlEncoder::YAML_INLINE => 1]);
+
+        return new Response($serialized);
+    }
+}
