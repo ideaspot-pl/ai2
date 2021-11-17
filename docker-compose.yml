@@ -94,3 +94,33 @@ services:
     mem_limit: 1024m
     volumes:
       - ./:/docker
+
+  ai2-laravel-php:
+    container_name: ai2-laravel-php
+    hostname: ai2-laravel-php
+    build: ./docker/ai2-laravel/php
+    mem_limit: 512m
+    volumes:
+      - ./:/docker
+      - ./source:/var/www/html
+    ports:
+      - "8803:80"
+    links:
+      - ai2-laravel-mysql-laravel
+
+  ai2-laravel-mysql-laravel:
+    container_name: ai2-laravel-mysql-spa
+    hostname: ai2-laravel-mysql-spa
+    image: mariadb:10.3.9
+    mem_limit: 128m
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: 12345678
+    volumes:
+      - ./data/laravel:/var/lib/mysql
+      - ./:/docker
+      - ~/.ssh:/root/.ssh:ro
+    ports:
+      - "38803:3306"
