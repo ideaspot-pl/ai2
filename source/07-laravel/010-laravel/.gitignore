@@ -13,3 +13,5 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/app/Models/Location.php
+/app/Models/Measurement.php

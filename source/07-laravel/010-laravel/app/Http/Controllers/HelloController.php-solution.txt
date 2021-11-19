@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class HelloController extends Controller
+{
+    public function helloIp(Request $request)
+    {
+        return "Hello from IP {$request->getClientIp()}";
+    }
+}
+
+// Route::get('/hello-ip', [\App\Http\Controllers\HelloController::class, 'helloIp']);

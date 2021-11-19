@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Location;
+use Illuminate\Http\Request;
+
+class WeatherController extends Controller
+{
+    public function weatherForLocation($locationId)
+    {
+        $location = Location::find($locationId);
+        return view('weather.location', [
+            'location' => $location,
+        ]);
+    }
+}

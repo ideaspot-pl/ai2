@@ -1,0 +1,33 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class MeasurementSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::table('measurements')->insert([
+            'location_id' => 1,
+            'date' => '2021-11-19',
+            'celsius' => 12,
+        ]);
+        DB::table('measurements')->insert([
+            'location_id' => 1,
+            'date' => '2021-11-20',
+            'celsius' => 13,
+        ]);
+        DB::table('measurements')->insert([
+            'location_id' => 1,
+            'date' => '2021-11-21',
+            'celsius' => 10,
+        ]);
+    }
+}
