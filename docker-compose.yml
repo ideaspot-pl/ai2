@@ -124,3 +124,11 @@ services:
       - ~/.ssh:/root/.ssh:ro
     ports:
       - "38803:3306"
+
+  ai2-maven:
+    container_name: ai2-maven
+    hostname: ai2-maven
+    build: ./docker/ai2-maven
+    mem_limit: 512m
+    volumes:
+      - ./:/docker
