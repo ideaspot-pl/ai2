@@ -1,0 +1,19 @@
+<?php // src/Controller/HelloController.php
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+
+class LuckyController extends AbstractController
+{
+    public function luckyAction($number)
+    {
+        $rand = rand(0, 100);
+        $desc = $rand < $number ? 'less' : 'more';
+        return $this->render('lucky/lucky.html.twig', [
+            'rand' => $rand,
+            'desc' => $desc,
+            'number' => $number,
+        ]);
+    }
+}

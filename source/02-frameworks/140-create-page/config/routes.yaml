@@ -4,3 +4,7 @@ app_hello_hello:
   controller: App\Controller\HelloController::helloAction
   defaults:
     name: User
+
+#app_lucky_lucky:
+#  path: /lucky/{number}
+#  controller: App\Controller\LuckyController:luckyAction
