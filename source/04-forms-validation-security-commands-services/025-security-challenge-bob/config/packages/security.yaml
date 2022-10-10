@@ -10,7 +10,6 @@ security:
                 users:
                     admin: { password: '$argon2id$v=19$m=65536,t=4,p=1$g/sw+NWKNpJN4AU9CVvCNw$BZwAOpMyX382VP3oygn1vRXWkgxlsAyYxXYmynD/hXU', roles: ['ROLE_ADMIN']}
                     super_admin: { password: '$argon2id$v=19$m=65536,t=4,p=1$g/sw+NWKNpJN4AU9CVvCNw$BZwAOpMyX382VP3oygn1vRXWkgxlsAyYxXYmynD', roles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}
-                    bobn: { password: '$argon2id$v=19$m=65536,t=4,p=1$qSvhYcUWMd77A2fFOJ8RUQ$ENM4KImO2fqXkvzRQa7fcNtiK3TMNY62nhm3elUe1+E', roles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN', 'ROLE_SUPER_BOB']}
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
