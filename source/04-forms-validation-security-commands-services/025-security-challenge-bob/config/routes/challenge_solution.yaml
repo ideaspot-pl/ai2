@@ -1,0 +1,3 @@
+challenge_security_solution:
+  path: /challenge-solution
+  controller: App\Controller\ChallengeSecuritySolutionController:challengeAction

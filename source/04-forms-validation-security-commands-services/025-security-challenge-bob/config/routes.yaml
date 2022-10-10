@@ -1,0 +1,11 @@
+# config/routes.yaml
+app_logout:
+  path: /logout
+  methods: GET
+
+admin_index:
+  path: /admin
+  controller: App\Controller\AdminController:index
+
+challenge_solution:
+  resource: 'routes/challenge_solution.yaml'
