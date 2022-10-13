@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Command;
+
+use App\Repository\LocationRepository;
+use App\Repository\MeasurementRepository;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
+
+#[AsCommand(
+    name: 'weather:location-id',
+    description: 'Add a short description for your command',
+)]
+class WeatherLocationIdCommand extends Command
+{
+    private LocationRepository $locationRepository;
+    private MeasurementRepository $measurementRepository;
+
+    public function __construct(LocationRepository $locationRepository, MeasurementRepository $measurementRepository, string $name = null)
+    {
+        $this->locationRepository = $locationRepository;
+        $this->measurementRepository = $measurementRepository;
+        parent::__construct($name);
+    }
+
+    protected function configure(): void
+    {
+        $this
+            ->addArgument('locationId', InputArgument::REQUIRED, 'Location ID')
+            ->addOption('start-date', null, InputOption::VALUE_REQUIRED, 'Start Date')
+            ->addOption('end-date', null, InputOption::VALUE_REQUIRED, 'End Date')
+        ;
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        $locationId = $input->getArgument('locationId');
+        $startDate = $input->getOption('start-date');
+        $endDate = $input->getOption('end-date');
+
+        $location = $this->locationRepository->find($locationId);
+        $measurements = $this->measurementRepository->findByLocation(
+            $location,
+            $startDate ? new \DateTime($startDate) : null,
+            $endDate ? new \DateTime($endDate) : null
+        );
+
+        $result = [
+            'name' => $location->getName(),
+            'country' => $location->getCountry(),
+            'measurements' => [],
+        ];
+        foreach ($measurements as $measurement) {
+            $result['measurements'][] = [
+                'date' => $measurement->getDate()->format('Y-m-d'),
+                'date_timestamp' => $measurement->getDate()->format('U'),
+                'celsius' => $measurement->getCelsius(),
+            ];
+        }
+
+        $output->writeln(json_encode($result, JSON_PRETTY_PRINT));
+
+        return Command::SUCCESS;
+    }
+}

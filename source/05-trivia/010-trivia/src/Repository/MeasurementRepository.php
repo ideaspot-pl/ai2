@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Location;
 use App\Entity\Measurement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;

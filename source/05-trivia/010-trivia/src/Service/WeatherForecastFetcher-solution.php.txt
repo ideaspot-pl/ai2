@@ -1,0 +1,42 @@
+<?php
+namespace App\Service;
+
+use App\Repository\LocationRepository;
+use App\Repository\MeasurementRepository;
+
+class WeatherForecastFetcher
+{
+    private LocationRepository $locationRepository;
+    private MeasurementRepository $measurementRepository;
+
+    public function __construct(LocationRepository $locationRepository, MeasurementRepository $measurementRepository)
+    {
+        $this->locationRepository = $locationRepository;
+        $this->measurementRepository = $measurementRepository;
+    }
+
+    public function getForecastForLocation($locationId, $dateFrom = null, $dateTo = null): array
+    {
+        $location = $this->locationRepository->find($locationId);
+        $measurements = $this->measurementRepository->findByLocation(
+            $location,
+            $dateFrom ? new \DateTime($dateFrom) : null,
+            $dateTo ? new \DateTime($dateTo) : null
+        );
+
+        $result = [
+            'name' => $location->getName(),
+            'country' => $location->getCountry(),
+            'measurements' => [],
+        ];
+        foreach ($measurements as $measurement) {
+            $result['measurements'][] = [
+                'date' => $measurement->getDate()->format('Y-m-d'),
+                'date_timestamp' => $measurement->getDate()->format('U'),
+                'celsius' => $measurement->getCelsius(),
+            ];
+        }
+
+        return $result;
+    }
+}

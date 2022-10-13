@@ -1,8 +1,12 @@
 <?php // src/Controller/WeatherController.php
 namespace App\Controller;
 
+use App\Entity\Location;
 use App\Service\HighlanderForecastGenerator;
+use App\Service\WeatherForecastFetcher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,5 +22,11 @@ class WeatherController extends AbstractController
 </html>
 EOT
         );
+    }
+
+    #[Route('/weather-for-location/{locationId}')]
+    public function weatherForLocationAction(Request $request, WeatherForecastFetcher $weatherForecastFetcher, $locationId): Response
+    {
+        return new JsonResponse($weatherForecastFetcher->getForecastForLocation($locationId, $request->get('start-date'), $request->get('end-date')));
     }
 }

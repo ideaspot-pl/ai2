@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Command;
+
+use App\Repository\LocationRepository;
+use App\Repository\MeasurementRepository;
+use App\Service\WeatherForecastFetcher;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
+
+#[AsCommand(
+    name: 'weather:location-id',
+    description: 'Add a short description for your command',
+)]
+class WeatherLocationIdCommand extends Command
+{
+    private WeatherForecastFetcher $weatherForecastFetcher;
+
+    public function __construct(WeatherForecastFetcher $weatherForecastFetcher, string $name = null)
+    {
+        $this->weatherForecastFetcher = $weatherForecastFetcher;
+        parent::__construct($name);
+    }
+
+    protected function configure(): void
+    {
+        $this
+            ->addArgument('locationId', InputArgument::REQUIRED, 'Location ID')
+            ->addOption('start-date', null, InputOption::VALUE_REQUIRED, 'Start Date')
+            ->addOption('end-date', null, InputOption::VALUE_REQUIRED, 'End Date')
+        ;
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        $locationId = $input->getArgument('locationId');
+        $startDate = $input->getOption('start-date');
+        $endDate = $input->getOption('end-date');
+
+        $result = $this->weatherForecastFetcher->getForecastForLocation($locationId, $startDate, $endDate);
+        $output->writeln(json_encode($result, JSON_PRETTY_PRINT));
+
+        return Command::SUCCESS;
+    }
+}
