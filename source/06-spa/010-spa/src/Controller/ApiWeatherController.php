@@ -31,7 +31,7 @@ class ApiWeatherController extends AbstractController
 
     /**
      * @return Response
-     * @Route("/api/weather-twig.{_format}", name="api_weather_json")
+     * @Route("/api/weather-twig.{_format}", name="api_weather_twig")
      */
     public function weatherTwigAction(Request $request, LocationRepository $locationRepository, MeasurementRepository $measurementRepository, $_format): Response
     {
@@ -62,7 +62,7 @@ class ApiWeatherController extends AbstractController
 
     /**
      * @return Response
-     * @Route("/api/weather-serializer.{_format}", name="api_weather_dto")
+     * @Route("/api/weather-serializer.{_format}", name="api_weather_serializer")
      */
     public function weatherSerializerAction(Request $request, LocationRepository $locationRepository, MeasurementRepository $measurementRepository, SerializerInterface $serializer, $_format): Response
     {
