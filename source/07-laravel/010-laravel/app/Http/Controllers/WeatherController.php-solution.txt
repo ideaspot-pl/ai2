@@ -15,3 +15,9 @@ class WeatherController extends Controller
         ]);
     }
 }
+
+
+// Route::get('/weather/location/{locationId}', [
+//     \App\Http\Controllers\WeatherController::class,
+//     'weatherForLocation'
+// ]);
